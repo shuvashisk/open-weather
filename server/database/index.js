@@ -1,9 +1,9 @@
-import { Pool } from 'pg';
+let {Pool} = require('pg');
 
 const CONNECTION_STRING = process.env.DATABASE_URL || 
 'postgresql://postgres:nepal2@localhost:5432/open_weather_db';
 
-
+const SSL = process.env.NODE_ENV === 'production';
 class Database {
 
     constructor(){
@@ -19,7 +19,7 @@ class Database {
     });
 
 }
-    query(){
+    query(query, ...args){
         this._pool.connect((err,client, done) => {
             if(err) throw err;
             const params = args.length === 2 ? args[0]:[];

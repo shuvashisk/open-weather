@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+let db = require('./database');
+
 const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 5000;
 
@@ -14,5 +16,15 @@ app.listen(PORT, () =>{
 
     console.log(`Server listening on port: ${PORT}`);
 });
+
+db.query('select now()',(err, res) => {
+
+        if(err.error){
+            return console.log(err.error);
+        }
+        console.log(`Db connected, response: ${res[0].now}`);
+        
+});
+
 
 module.exports = app;
